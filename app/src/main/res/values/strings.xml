@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">SingujiSmapa</string>
+    <string name="home">Home</string>
+    <string name="jadwal">Jadwal</string>
+    <string name="laporan">Laporan</string>
+    <string name="saya">Saya</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
