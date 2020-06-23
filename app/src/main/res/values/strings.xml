@@ -13,4 +13,11 @@
     <string name="soal">Soal</string>
     <string name="menit">Menit</string>
     <string name="gambar">gambar</string>
+    <string name="mata_pelajaran">MATA PELAJARAN</string>
+    <string name="quiz">QUIZ</string>
+    <string name="masukkan_token_soal_disini">Masukkan Token Soal disini</string>
+    <string name="mulai">MULAI</string>
+    <string name="gambar">gambar</string>
+    <string name="soal">Soal</string>
+    <string name="menit">Menit</string>
 </resources>
