@@ -10,6 +10,18 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
+
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
+import com.android.volley.toolbox.Volley;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -63,27 +75,27 @@ public class jadwal extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    View v ;
+    private final String URL_Jadwal = "http://192.168.1.4/SingujiSmapa/folder_php/jadwal.php";
     private RecyclerView myrecyclerview ;
     private List<JadwalItem> lstjadwal;
+    private RecyclerViewAdapter_jadwal adapter;
 
 
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        v =  inflater.inflate(R.layout.fragment_jadwal, container, false);
+        View view =  inflater.inflate(R.layout.fragment_jadwal, container, false);
         // Inflate the layout for this fragment
+
+        myrecyclerview = view.findViewById(R.id.jadwal_rcl);
         lstjadwal = new ArrayList<>();
+
         addJadwal();
-        myrecyclerview = (RecyclerView) v.findViewById(R.id.jadwal_rcl);
-        RecyclerViewAdapter_jadwal recyclerViewAdapter_jadwal = new RecyclerViewAdapter_jadwal(getContext(),lstjadwal);
-        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity()));
-        myrecyclerview.setAdapter(recyclerViewAdapter_jadwal);
-        return v ;
+
+        return view ;
 
     }
-    //data yan ditampilkan masih manual belum ambil dari JSON
 
     @Override
     public void onSaveInstanceState(@NonNull Bundle outState) {
@@ -91,23 +103,42 @@ public class jadwal extends Fragment {
     }
 
     public void addJadwal(){
-        lstjadwal.add(new JadwalItem("MATEMATIKA","Admin","Dinda Ayu Nafisyah",
-                "Senin,8 Juni 2020 08.00 WIB","QUIZ","40","120",R.drawable.jadwal_image));
-        lstjadwal.add(new JadwalItem("BAHASA INGGRIS","Guru","Dyta Sofia Amelia",
-                "Selasa,9 Juni 2020 08.30 WIB","UTS","30","90",R.drawable.jadwal_image));
-        lstjadwal.add(new JadwalItem("BIOLOGI","Guru","Ummalatul Kamila",
-                "Rabu,10 Juni 2020 09.00 WIB","UAS","40","120",R.drawable.jadwal_image));
-        lstjadwal.add(new JadwalItem("EKONOMI","Guru","Bagus Ihsan Taufiqurrahman",
-                "Jumat,12 Juni 2020 09.30 WIB","UAS","20","60",R.drawable.jadwal_image));
-        lstjadwal.add(new JadwalItem("MATEMATIKA","Guru","Dinda Ayu Nafisyah",
-                "Senin,8 Juni 2020 08.00 WIB","QUIZ","40","120",R.drawable.jadwal_image));
-        lstjadwal.add(new JadwalItem("BAHASA INGGRIS","Guru","Dyta Sofia Amelia",
-                "Selasa,9 Juni 2020 08.30 WIB","UTS","30","90",R.drawable.jadwal_image));
-        lstjadwal.add(new JadwalItem("BIOLOGI","Guru","Ummalatul Kamila",
-                "Rabu,10 Juni 2020 09.00 WIB","UAS","40","120",R.drawable.jadwal_image));
-        lstjadwal.add(new JadwalItem("EKONOMI","Guru","Ahmad Daifullah",
-                "Jumat,12 Juni 2020 09.30 WIB","UAS","20","60",R.drawable.jadwal_image));
+        RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, URL_Jadwal, null,
+                new Response.Listener<JSONArray>() {
+                    @Override
+                    public void onResponse(JSONArray response) {
 
+                        for (int i = 0; i < response.length(); i++) {
+                            try {
+                                JSONObject jsonObject = response.getJSONObject(i);
+                                JadwalItem jadwal = new JadwalItem();
+                                jadwal.setMapel(jsonObject.getString("mata_pelajaran"));
+                                jadwal.setStatus(jsonObject.getString("status"));
+                                jadwal.setNamaguru(jsonObject.getString("nama_guru"));
+                                jadwal.setWaktumengerjakan(jsonObject.getString("waktu_mulai"));
+                                jadwal.setStatussoal(jsonObject.getString("tipe_ujian"));
+                                jadwal.setJumlahsoal(jsonObject.getString("jumlah_soal"));
+                                jadwal.setWaktumulai(jsonObject.getString("waktu_mengerjakan"));
+                                lstjadwal.add(jadwal);
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                                Toast.makeText(getActivity().getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                        adapter = new RecyclerViewAdapter_jadwal(getActivity(), lstjadwal);
+                        myrecyclerview.setAdapter(adapter);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(getActivity().getApplicationContext(), "Error" + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        requestQueue.add(jsonRequest);
     }
 }
 
