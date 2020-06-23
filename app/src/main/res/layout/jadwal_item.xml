@@ -20,7 +20,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:gravity="center_horizontal" />
 
     <ImageView
         android:id="@+id/imgnote"
@@ -30,7 +31,8 @@
         android:layout_height="60dp"
         android:layout_below="@id/mapel"
         android:src="@drawable/jadwal_image"
-        android:contentDescription="gambar" />
+        android:contentDescription="gambar"
+        android:layout_marginLeft="35dp" />
 
     <TextView
         android:id="@+id/status"
@@ -48,7 +50,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_toRightOf="@id/imgnote"
+        android:layout_marginLeft="30dp"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/namaguru"
@@ -59,7 +64,10 @@
         android:layout_toEndOf="@id/imgnote"
         android:layout_marginStart="88dp"
         android:textAlignment="center"
-        android:textSize="12sp" />
+        android:textSize="12sp"
+        android:layout_toRightOf="@id/imgnote"
+        android:layout_marginLeft="88dp"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/waktumengerjakan"
@@ -78,7 +86,10 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        />
+        android:layout_toRightOf="@id/imgnote"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="8dp"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/statussoal"
@@ -94,7 +105,10 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="30dp"
+        android:layout_marginRight="250dp"
+        android:gravity="center_horizontal" />
 
     <TextView
         android:id="@+id/jumlahsoal"
@@ -107,7 +121,8 @@
         android:layout_marginStart="150dp"
         android:textAlignment="center"
         android:textSize="12sp"
-        />
+        android:layout_marginLeft="150dp"
+        android:gravity="center_horizontal" />
     <TextView
         android:id="@+id/soal"
         android:layout_width="wrap_content"
@@ -120,7 +135,8 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="12sp"
-        />
+        android:layout_marginLeft="170dp"
+        android:gravity="center_horizontal" />
     <TextView
         android:id="@+id/waktumulai"
         android:layout_width="wrap_content"
@@ -132,7 +148,8 @@
         android:layout_marginStart="215dp"
         android:textAlignment="center"
         android:textSize="12sp"
-        />
+        android:layout_marginLeft="215dp"
+        android:gravity="center_horizontal" />
     <TextView
         android:id="@+id/menit"
         android:layout_width="wrap_content"
@@ -145,6 +162,7 @@
         android:textStyle="bold"
         android:textAlignment="center"
         android:textSize="12sp"
-        />
+        android:layout_marginLeft="240dp"
+        android:gravity="center_horizontal" />
 
 </RelativeLayout>
