@@ -2,11 +2,17 @@ package com.example.singujismapa;
 
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -24,9 +30,7 @@ public class jadwal extends Fragment {
     private String mParam1;
     private String mParam2;
 
-    public jadwal() {
-        // Required empty public constructor
-    }
+
 
     /**
      * Use this factory method to create a new instance of
@@ -46,6 +50,11 @@ public class jadwal extends Fragment {
         return fragment;
     }
 
+    public jadwal() {
+        // Required empty public constructor
+    }
+
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,10 +64,23 @@ public class jadwal extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_jadwal, container, false);
+
+
+    }
+    //data yan ditampilkan masih manual belum ambil dari JSON
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+    }
+
+    public void addJadwal(){
+
     }
 }
+
