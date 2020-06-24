@@ -52,5 +52,3 @@
             app:layout_constraintTop_toBottomOf="@+id/txt_comment" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
