@@ -75,6 +75,7 @@ public class jadwal extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
+    //URL JANGAN LUPA DIGANTI INI TEMAN TEMAN KALO MAU NGE RUN
     private final String URL_Jadwal = "http://192.168.1.4/SingujiSmapa/folder_php/jadwal.php";
     private RecyclerView myrecyclerview ;
     private List<JadwalItem> lstjadwal;
