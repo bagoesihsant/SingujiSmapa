@@ -18,7 +18,7 @@
         tools:targetApi="m"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
+        <activity android:name=".score_remidial"></activity>
         <activity
             android:name=".HomeSinguji"
             android:theme="@style/AppTheme">

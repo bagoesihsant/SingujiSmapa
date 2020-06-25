@@ -2,7 +2,6 @@ package com.example.singujismapa;
 
 import android.os.Bundle;
 
-import androidx.annotation.NonNull;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -28,11 +27,10 @@ import java.util.List;
 
 /**
  * A simple {@link Fragment} subclass.
- * Use the {@link jadwal#newInstance} factory method to
+ * Use the {@link home#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class jadwal extends Fragment {
-
+public class home extends Fragment {
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -50,22 +48,17 @@ public class jadwal extends Fragment {
      *
      * @param param1 Parameter 1.
      * @param param2 Parameter 2.
-     * @return A new instance of fragment jadwal.
+     * @return A new instance of fragment home.
      */
     // TODO: Rename and change types and number of parameters
-    public static jadwal newInstance(String param1, String param2) {
-        jadwal fragment = new jadwal();
+    public static home newInstance(String param1, String param2) {
+        home fragment = new home();
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, param1);
         args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
-
-    public jadwal() {
-        // Required empty public constructor
-    }
-
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -75,61 +68,56 @@ public class jadwal extends Fragment {
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
     }
-    //URL JANGAN LUPA DIGANTI INI TEMAN TEMAN KALO MAU NGE RUN
-    private final String URL_Jadwal = "http://192.168.1.4/SingujiSmapa/folder_php/jadwal.php";
-    private RecyclerView myrecyclerview ;
-    private List<JadwalItem> lstjadwal;
-    private RecyclerViewAdapter_jadwal adapter;
 
+    private RecyclerView recyclerView;
+    private HomeAdapter adapter;
+    private List<HomeItem> homeitem;
+    private final String URL_TASK =  "http://192.168.43.219/SingujiSmapa/folder_php/home.php";
 
+    public home() {
+        // Required empty public constructor
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.fragment_jadwal, container, false);
         // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_home, container, false);
 
-        myrecyclerview = view.findViewById(R.id.jadwal_rcl);
-        lstjadwal = new ArrayList<>();
+        recyclerView = view.findViewById(R.id.list_data);
+        homeitem = new ArrayList<>();
+        extractHome();
 
-        addJadwal();
-
-        return view ;
-
+        return view;
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle outState) {
-        super.onSaveInstanceState(outState);
-    }
-
-    public void addJadwal(){
+    private void extractHome()
+    {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity().getApplicationContext());
-        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, URL_Jadwal, null,
+        JsonArrayRequest jsonRequest = new JsonArrayRequest(Request.Method.GET, URL_TASK, null,
                 new Response.Listener<JSONArray>() {
                     @Override
                     public void onResponse(JSONArray response) {
 
-                        for (int i = 0; i < response.length(); i++) {
+                        for (int i = 0; i < response.length(); i++)
+                        {
                             try {
                                 JSONObject jsonObject = response.getJSONObject(i);
-                                JadwalItem jadwal = new JadwalItem();
-                                jadwal.setMapel(jsonObject.getString("mata_pelajaran"));
-                                jadwal.setStatus(jsonObject.getString("status"));
-                                jadwal.setNamaguru(jsonObject.getString("nama_guru"));
-                                jadwal.setWaktumengerjakan(jsonObject.getString("waktu_mulai"));
-                                jadwal.setStatussoal(jsonObject.getString("tipe_ujian"));
-                                jadwal.setJumlahsoal(jsonObject.getString("jumlah_soal"));
-                                jadwal.setWaktumulai(jsonObject.getString("waktu_mengerjakan"));
-                                lstjadwal.add(jadwal);
+                               HomeItem md = new HomeItem();
+                                md.setNamaData(jsonObject.getString("mata_pelajaran"));
+                                md.setNamaGuru(jsonObject.getString("nama_guru"));
+
+                                homeitem.add(md);
                             } catch (JSONException e) {
                                 e.printStackTrace();
                                 Toast.makeText(getActivity().getApplicationContext(), "Error" + e.toString(), Toast.LENGTH_SHORT).show();
                             }
                         }
-                        myrecyclerview.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
-                        adapter = new RecyclerViewAdapter_jadwal(getActivity(), lstjadwal);
-                        myrecyclerview.setAdapter(adapter);
+
+                        recyclerView.setLayoutManager(new LinearLayoutManager(getActivity().getApplicationContext()));
+                        adapter = new HomeAdapter(getActivity().getApplicationContext(), homeitem);
+                        recyclerView.setAdapter(adapter);
+
                     }
                 },
                 new Response.ErrorListener() {
@@ -138,8 +126,7 @@ public class jadwal extends Fragment {
                         Toast.makeText(getActivity().getApplicationContext(), "Error" + error.toString(), Toast.LENGTH_SHORT).show();
                     }
                 });
-
         requestQueue.add(jsonRequest);
     }
-}
 
+}
