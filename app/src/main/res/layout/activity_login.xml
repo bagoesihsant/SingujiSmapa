@@ -1,106 +1,113 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/container"
+    android:id="@+id/constrainlogin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_gravity="center"
-    android:orientation="vertical"
-    android:padding="0dp"
-    android:paddingLeft="16dp"
-    android:paddingBottom="16dp"
+    android:background="@drawable/background"
     tools:context=".LoginActivity">
 
-
     <ImageView
-        android:layout_width="800dp"
-        android:layout_height="150dp"
-        android:layout_marginLeft="250dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/nav_atas_foreground"
-        android:contentDescription="TODO" />
+        android:id="@+id/imageView2"
+        android:layout_width="342px"
+        android:layout_height="360px"
+        android:layout_marginTop="116dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/logo_sma4" />
 
-    <ImageView
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:padding="0dp"
-        app:srcCompat="@mipmap/logo_smapa_foreground"/>
+        android:gravity="center"
+        app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
-    <EditText
-        android:id="@+id/username"
+        <EditText
+            android:id="@+id/username"
+            android:layout_width="871px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:ems="10"
+            android:inputType="textPersonName"
+
+            android:paddingBottom="20dp"
+            android:hint="Username"
+            android:textColor="#000000"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.493"
+            app:layout_constraintStart_toStartOf="parent" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="20dp"
-        android:layout_marginTop="250dp"
-        android:layout_marginRight="24dp"
+        android:layout_marginTop="20dp"
 
-        android:hint="Username"
-        android:selectAllOnFocus="true"
+        android:gravity="center"
+        app:hintEnabled="false"
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout"
+        app:passwordToggleEnabled="true"
+        tools:layout_editor_absoluteX="-27dp">
+
+        <EditText
+            android:id="@+id/password"
+            android:layout_width="871px"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:ems="10"
+            android:imeOptions="actionDone"
+            android:inputType="textPassword"
+
+            android:paddingBottom="20dp"
+            android:hint="Password"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.497"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <ProgressBar
+        android:id="@+id/load"
+        android:layout_width="0dp"
+        android:layout_height="175dp"
+
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="match_parent"
+    <TextView
+        android:id="@+id/tvLupaPassword"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="295dp"
-        android:hint="@string/prompt_password"
-        app:errorEnabled="true"
-        app:passwordToggleEnabled="true"
-
-        android:imeActionLabel="@string/action_sign_in_short"
-        android:imeOptions="actionDone"
-        android:inputType="textPassword"
-        android:paddingTop="10dp"
-        android:selectAllOnFocus="true"
+        android:text="Lupa Password ?"
+        android:textColor="#000"
+        android:textSize="11sp"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.868"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/username"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="24dp" />
-
-    <ProgressBar
-        android:id="@+id/load"
-        android:layout_below="@id/password"
-        android:layout_marginTop="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:visibility="gone"/>
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayout2" />
 
     <Button
         android:id="@+id/idButton"
-        android:layout_width="300dp"
-        android:layout_centerHorizontal="true"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="350dp"
-        android:padding="10dp"
-        android:background="@color/colorAccent"
-        android:text="@string/LOGIN" />
-
-    <TextView
-        android:id="@+id/tvLupaPassword"
-        android:layout_width="1500dp"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="410dp"
-        android:text="@string/lupa_password"
-        android:textStyle="bold"
-        android:textSize="20dp"
-        android:textAlignment="center"
-        android:gravity="center_horizontal" />
+        android:layout_width="871px"
+        android:layout_height="87px"
+        android:layout_marginTop="12dp"
+        android:background="@drawable/bg_button"
+        android:text="LOGIN"
+        android:textColor="#FFFFFF"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.493"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvLupaPassword" />
 
 
-    <ImageView
-        android:layout_width="900dp"
-        android:layout_height="600dp"
-        android:layout_marginTop="540dp"
-        android:layout_marginRight="190dp"
-        android:paddingBottom="0dp"
-        android:padding="0dp"
-        android:scaleType="fitXY"
-        android:src="@mipmap/nav_bawah_foreground" />
 
-
-</RelativeLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>
