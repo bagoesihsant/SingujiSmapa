@@ -68,6 +68,7 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
         holder.tv_statussoal.setText(mData.get(position).getStatussoal());
         holder.tv_jumlahsoal.setText(mData.get(position).getJumlahsoal());
         holder.tv_waktumulai.setText(mData.get(position).getWaktumulai());
+        holder.img_note.setImageResource(mData.get(position).getImgnote());
 
     }
 
@@ -86,6 +87,7 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
         private TextView tv_statussoal;
         private TextView tv_jumlahsoal;
         private TextView tv_waktumulai;
+        private ImageView img_note;
 
         public MyViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -98,6 +100,7 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
             tv_statussoal = (TextView) itemView.findViewById(R.id.statussoal);
             tv_jumlahsoal = (TextView) itemView.findViewById(R.id.jumlahsoal);
             tv_waktumulai = (TextView) itemView.findViewById(R.id.waktumulai);
+            img_note = (ImageView) itemView.findViewById(R.id.imgnote);
         }
     }
 }
