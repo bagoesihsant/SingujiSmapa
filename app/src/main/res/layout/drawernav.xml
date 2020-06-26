@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <include layout="@layout/activity_main"/>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/drawerview"
         app:headerLayout="@layout/header_drawernav"

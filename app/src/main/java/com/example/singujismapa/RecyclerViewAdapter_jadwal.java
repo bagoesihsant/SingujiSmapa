@@ -68,7 +68,7 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
         holder.tv_statussoal.setText(mData.get(position).getStatussoal());
         holder.tv_jumlahsoal.setText(mData.get(position).getJumlahsoal());
         holder.tv_waktumulai.setText(mData.get(position).getWaktumulai());
-        holder.img_note.setImageResource(mData.get(position).getImgnote());
+
 
     }
 

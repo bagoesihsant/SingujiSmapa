@@ -72,7 +72,7 @@ public class home extends Fragment {
     private RecyclerView recyclerView;
     private HomeAdapter adapter;
     private List<HomeItem> homeitem;
-    private final String URL_TASK =  "http://192.168.43.219/SingujiSmapa/folder_php/home.php";
+    private final String URL_TASK =  "http://192.168.1.14/SingujiSmapa/folder_php/home.php";
 
     public home() {
         // Required empty public constructor

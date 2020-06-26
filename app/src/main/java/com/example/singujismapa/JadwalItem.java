@@ -8,12 +8,12 @@ public class JadwalItem {
     private String statussoal;
     private String jumlahsoal;
     private String waktumulai;
-    private int imgnote;
+
 
     public JadwalItem() {
     }
 
-    public JadwalItem(String mapel, String status, String namaguru, String waktumengerjakan, String statussoal, String jumlahsoal, String waktumulai, int imgnote) {
+    public JadwalItem(String mapel, String status, String namaguru, String waktumengerjakan, String statussoal, String jumlahsoal, String waktumulai) {
         this.mapel = mapel;
         this.status = status;
         this.namaguru = namaguru;
@@ -21,7 +21,7 @@ public class JadwalItem {
         this.statussoal = statussoal;
         this.jumlahsoal = jumlahsoal;
         this.waktumulai = waktumulai;
-        this.imgnote = imgnote;
+
     }
 
     //GETTER
@@ -55,9 +55,7 @@ public class JadwalItem {
         return waktumulai;
     }
 
-    public int getImgnote() {
-        return imgnote;
-    }
+
 
     // SETTER
 
@@ -89,7 +87,5 @@ public class JadwalItem {
         this.waktumulai = waktumulai;
     }
 
-    public void setImgnote(int imgnote) {
-        this.imgnote = imgnote;
-    }
+
 }
