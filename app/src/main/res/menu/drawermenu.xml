@@ -4,9 +4,7 @@
         android:title="Akun Saya"
         android:icon="@drawable/ic_baseline_account_circle_24"/>
 
-    <item android:id="@+id/Bantuan"
-        android:title="Bantuan"
-        android:icon="@drawable/ic_baseline_help_24"/>
+
 
     <item android:id="@+id/Logout"
         android:title="Logout"

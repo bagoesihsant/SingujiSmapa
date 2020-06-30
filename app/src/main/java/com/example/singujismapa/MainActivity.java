@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity  {
         setContentView(R.layout.drawernav);
         getFragment(new home());
         nav_view = findViewById(R.id.drawerview);
+        sessionManager = new SessionManager(MainActivity.this);
         dlay = findViewById(R.id.drawernav);
         toggle =new ActionBarDrawerToggle(this, dlay, R.string.Open, R.string.Close);
         dlay.addDrawerListener(toggle);
@@ -42,11 +43,9 @@ public class MainActivity extends AppCompatActivity  {
                 if (item.getItemId() == R.id.Akunsaya){
                     getSupportActionBar().setTitle("Akun saya");
                     getFragment(new akun_saya());
-                }else if(item.getItemId() == R.id.Bantuan) {
-                    getSupportActionBar().setTitle("Bantuan");
-                    getFragment(new bantuan());
                 }else if(item.getItemId() == R.id.Logout) {
 
+                    sessionManager.logout();
                  }
                 dlay.closeDrawer(GravityCompat.START);
                 return true;
@@ -70,6 +69,7 @@ public class MainActivity extends AppCompatActivity  {
                 else if (item.getItemId() == R.id.akun){
                     getSupportActionBar().setTitle("Akun Saya");
                     getFragment(new akun_saya());
+
                 }
                 return false;
             }
