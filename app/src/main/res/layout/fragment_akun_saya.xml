@@ -23,7 +23,7 @@
             android:background="@drawable/bg_sampul">
 
             <de.hdodenhof.circleimageview.CircleImageView
-                android:id="@+id/imageView"
+                android:id="@+id/foto_profil"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:layout_gravity="center"
@@ -107,16 +107,17 @@
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
-        <EditText
+        <Spinner
             android:id="@+id/semester"
+            style="@android:style/Widget.DeviceDefault.Spinner"
             android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-
-            android:paddingBottom="20dp"
+            android:layout_weight="2"
+            android:entries="@array/semester"
             android:hint="Semester"
+            android:paddingBottom="20dp"
+            android:spinnerMode="dropdown"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
@@ -130,16 +131,17 @@
         android:gravity="center"
         app:layout_constraintTop_toBottomOf="@+id/imageView2">
 
-        <EditText
+        <Spinner
             android:id="@+id/jenis_kelamin"
+            style="@android:style/Widget.DeviceDefault.Spinner"
             android:layout_width="325dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:ems="10"
-            android:inputType="textPersonName"
-
-            android:paddingBottom="20dp"
+            android:layout_weight="2"
+            android:entries="@array/jenis_kelamin"
             android:hint="Jenis Kelamin"
+            android:paddingBottom="20dp"
+            android:spinnerMode="dropdown"
             android:textColor="#000000"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.493"
@@ -200,7 +202,7 @@
     </com.google.android.material.textfield.TextInputLayout>
 
     <Button
-        android:id="@+id/idButton"
+        android:id="@+id/edit"
         android:layout_width="325dp"
         android:layout_height="35dp"
         android:layout_below="@+id/textInputLayout6"

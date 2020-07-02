@@ -20,4 +20,12 @@
     <string name="KIRIM">KIRIM</string>
     <string name="Open">open</string>
     <string name="Close">close</string>
+    <string-array name="jenis_kelamin">
+        <item>Laki-Laki</item>
+        <item>Perempuan</item>
+    </string-array>
+    <string-array name="semester">
+        <item>Genap</item>
+        <item>Ganjil</item>
+    </string-array>
 </resources>
