@@ -123,7 +123,7 @@ public class jadwal extends Fragment {
                                 jadwal.setJumlahsoal(jsonObject.getString("jumlah_soal"));
                                 jadwal.setWaktumulai(jsonObject.getString("waktu_mengerjakan"));
                                 jadwal.setTokenSoal(jsonObject.getString("token_soal"));
-                                jadwal.setId_jenis_soal(jsonObject.getString("id_jenis_soal"));
+                                //jadwal.setId_jenis_soal(jsonObject.getString("id_jenis_soal"));
                                 lstjadwal.add(jadwal);
                             } catch (JSONException e) {
                                 e.printStackTrace();

@@ -73,7 +73,7 @@ public class akun_saya extends Fragment {
     private ProgressDialog progressDialog;
     CircleImageView foto_profil;
     private Boolean issetImportantValue;
-    private String tmpJurusan, tmpKelas, tmpSemester, tmpJenis_kelamin, tmpUsername, tmpPassword;
+    private String tmpJurusan, tmpNama, tmpKelas, tmpSemester, tmpJenis_kelamin, tmpUsername, tmpPassword;
     // TODO: Rename and change types of parameters
     private String mParam1;
     private String mParam2;
@@ -160,7 +160,7 @@ public class akun_saya extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 if (i==0){
-                    tmpJenis_kelamin = "Laki laki";
+                    tmpJenis_kelamin = "Laki-Laki";
                 }else {
                     tmpJenis_kelamin = "Perempuan";
                 }
@@ -248,11 +248,6 @@ public class akun_saya extends Fragment {
                             String message = jsonObject.getString("message");
                             if (status.equals("200")){
                                 Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
-//                                Intent intent = new Intent(getContext(), BerandaOrenz.class);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//                                intent.putExtra("NAVIGATION", "AKUN");
-//                                startActivity(intent);
                             } else {
                                 Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
                             }
@@ -316,6 +311,7 @@ public class akun_saya extends Fragment {
 
                                     Tnama.setText(nama);
                                     Eusername.setText(username);
+                                    tmpNama = nama;
                                   //  Esemester.setText(semester);
                                     Epassword.setText(password);
 
@@ -337,9 +333,9 @@ public class akun_saya extends Fragment {
                                         Eusername.setText(username);
                                     }
 
-                                    if (jenis_kelamin.equals("Laki laki")){
+                                    if (jenis_kelamin.equals("Laki-Laki")){
                                         spinnerJK.setSelection(0);
-                                        tmpJenis_kelamin = "Laki laki";
+                                        tmpJenis_kelamin = "Laki-Laki";
                                     }else {
                                         spinnerJK.setSelection(1);
                                         tmpJenis_kelamin = "Perempuan";
@@ -438,12 +434,13 @@ public class akun_saya extends Fragment {
                 protected Map<String, String> getParams() {
                     Map<String, String> params = new HashMap<>();
                     params.put("NIS", NIS);
+                    params.put("nama_siswa", tmpNama);
                     params.put("id_jurusan", tmpJurusan);
                     params.put("jenis_kelamin", tmpJenis_kelamin);
                     params.put("kelas", tmpKelas);
                     params.put("semester", tmpSemester);
                     params.put("username_siswa", tmpUsername);
-                    params.put("password", tmpPassword);
+                    params.put("password_siswa", tmpPassword);
                     params.put("Content-Type", "application/x-www-form-urlencoded");
 
                     return params;

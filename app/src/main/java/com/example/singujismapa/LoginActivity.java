@@ -80,6 +80,18 @@ public class LoginActivity extends AppCompatActivity {
 
             }
         });
+
+        tvlupa_password.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(LoginActivity.this, LupaPasswordActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+            }
+        });
+
+
     }
 
     public void CheckEditTextIsEmptyOrNot(){

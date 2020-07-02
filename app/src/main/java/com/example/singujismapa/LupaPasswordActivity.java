@@ -18,37 +18,25 @@ public class LupaPasswordActivity extends AppCompatActivity {
     Button btnKirim;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_lupa_password);
 
         email = findViewById(R.id.email);
-        tvKembaliLogin = findViewById(R.id.tvKembaliLogin);
-        tvKembaliLogin.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                backToLogin();
-            }
-        });
+        tvKembaliLogin = findViewById(R.id.tvKembali);
 
         btnKirim = findViewById(R.id.btnKirim);
-        btnKirim.setOnClickListener(new View.OnClickListener() {
+
+        tvKembaliLogin.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
-                sendEmail();
+            public void onClick(View view) {
+                Intent intent = new Intent(LupaPasswordActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
             }
         });
-    }
-
-    private void backToLogin() {
-        Intent i_kembaliLogin = new Intent(context, LoginActivity.class);
-        startActivity(i_kembaliLogin);
-        finish();
-    }
-
-    private void sendEmail() {
 
     }
 }
