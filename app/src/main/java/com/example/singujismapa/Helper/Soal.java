@@ -107,7 +107,7 @@ public class Soal {
     public void setPembahasan(String pembahasan) {
         this.pembahasan = pembahasan;
     }
-    
+
     public int getJumlahSoal() {
         return jumlahSoal;
     }
