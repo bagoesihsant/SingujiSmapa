@@ -1,16 +1,23 @@
 package com.example.singujismapa;
 
 import android.Manifest;
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.annotation.RequiresApi;
 import androidx.fragment.app.Fragment;
 
+import android.provider.MediaStore;
 import android.text.TextUtils;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,9 +41,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
+
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -123,6 +134,7 @@ public class akun_saya extends Fragment {
         HashMap<String, String> user = sessionManager.getUserDetail();
         NIS = user.get(SessionManager.ID);
 
+
         foto_profil.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -179,6 +191,100 @@ public class akun_saya extends Fragment {
         GetUser();
         return root;
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String permissions[], @NonNull int[] grantResults) {
+        if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+            // required permissions granted, start crop image activity
+            chooseFile();
+        } else {
+            Toast.makeText(getContext(), "Cancelling, required permissions are not granted", Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void chooseFile() {
+        Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, 100);
+    }
+
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 100 && resultCode == Activity.RESULT_OK && data != null && data.getData() != null){
+            Uri filePath = data.getData();
+            try{
+                bitmap = MediaStore.Images.Media.getBitmap(Objects.requireNonNull(getContext()).getContentResolver(), filePath);
+                foto_profil.setImageBitmap(bitmap);
+            } catch (IOException e){
+                e.printStackTrace();
+            }
+
+//            Toast.makeText(getContext(), getStringImage(bitmap), Toast.LENGTH_LONG).show();
+            UploadFoto(NIS, getStringImage(bitmap));
+        }
+    }
+
+    public String getStringImage(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] imageByteArray = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(imageByteArray, Base64.DEFAULT);
+    }
+
+    private void UploadFoto(final String id_user, final String foto){
+        progressDialog.setMessage("Uploading..");
+        progressDialog.show();
+
+        String URL_UPDATE = BaseUrl + "api/profil/uploadfoto";
+        StringRequest stringRequest = new StringRequest(Request.Method.PUT, URL_UPDATE,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        progressDialog.dismiss();
+                        try{
+                            JSONObject jsonObject = new JSONObject(response);
+                            String status = jsonObject.getString("status");
+                            String message = jsonObject.getString("message");
+                            if (status.equals("200")){
+                                Toast.makeText(getContext(),message, Toast.LENGTH_SHORT).show();
+//                                Intent intent = new Intent(getContext(), BerandaOrenz.class);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                                intent.putExtra("NAVIGATION", "AKUN");
+//                                startActivity(intent);
+                            } else {
+                                Toast.makeText(getContext(), message, Toast.LENGTH_SHORT).show();
+                            }
+                        } catch (JSONException e){
+                            e.printStackTrace();
+                            progressDialog.dismiss();
+                            Toast.makeText(getContext(), e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        progressDialog.dismiss();
+                        Toast.makeText(getContext(), "Cek " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("NIS", NIS);
+                params.put("foto_siswa", foto);
+                params.put("Content-Type", "application/x-www-form-urlencoded");
+                return params;
+            }
+
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
     private void GetUser(){
         progressDialog.setMessage("Loading...");
         progressDialog.show();
