@@ -2,11 +2,14 @@ package com.example.singujismapa;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -42,6 +45,8 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
         myDialog.setContentView(R.layout.dialog_token_soal);
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
 
+        Button startButton = myDialog.findViewById(R.id.button_mulai_dialog);
+        final EditText editToken = myDialog.findViewById(R.id.dialog_edit_token);
 
         vHolder.item_jadwal.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -50,8 +55,50 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
                 TextView dialog_statussoal_tv = (TextView) myDialog.findViewById(R.id.dialog_statussoal);
                 dialog_mapel_tv.setText(mData.get(vHolder.getAdapterPosition()).getMapel());
                 dialog_statussoal_tv.setText(mData.get(vHolder.getAdapterPosition()).getStatussoal());
-                Toast.makeText(mContext, "Test KLIK"+String.valueOf(vHolder.getAdapterPosition()), Toast.LENGTH_SHORT).show();
+                editToken.setText("");
                 myDialog.show();
+            }
+        });
+
+        startButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                if(editToken.getText().toString().equals(mData.get(vHolder.getAdapterPosition()).getTokenSoal()))
+                {
+                    switch(mData.get(vHolder.getAdapterPosition()).getId_jenis_soal())
+                    {
+                        case "JNS001" :
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            mContext.startActivity(new Intent(mContext, ActivityUjianGanda.class));
+                            break;
+
+                        case "JNS002" :
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            mContext.startActivity(new Intent(mContext, ActivityUjianEssay.class));
+                            break;
+
+                        case "JNS003" :
+                            Toast.makeText(mContext, "Mohon maaf, ujian benar salah blm di implementasikan", Toast.LENGTH_SHORT).show();
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            break;
+
+                        case "JNS004" :
+                            Toast.makeText(mContext, "Mohon maaf, ujian mengurutkan blm di implementasikan", Toast.LENGTH_SHORT).show();
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            break;
+                    }
+                }else
+                {
+                    Toast.makeText(mContext, "Token tidak cocok, harap periksa kembali token peserta.", Toast.LENGTH_SHORT).show();
+                    editToken.setText("");
+                    myDialog.dismiss();
+                }
+
             }
         });
 

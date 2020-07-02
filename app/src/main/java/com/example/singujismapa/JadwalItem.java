@@ -8,6 +8,8 @@ public class JadwalItem {
     private String statussoal;
     private String jumlahsoal;
     private String waktumulai;
+    private String tokenSoal;
+    private String id_jenis_soal;
 
 
     public JadwalItem() {
@@ -55,6 +57,14 @@ public class JadwalItem {
         return waktumulai;
     }
 
+    public String getTokenSoal(){
+        return tokenSoal;
+    };
+
+    public String getId_jenis_soal()
+    {
+        return id_jenis_soal;
+    }
 
 
     // SETTER
@@ -87,5 +97,13 @@ public class JadwalItem {
         this.waktumulai = waktumulai;
     }
 
+    public void setTokenSoal(String tokenSoal){
+        this.tokenSoal = tokenSoal;
+    };
+
+    public void setId_jenis_soal(String id_jenis_soal)
+    {
+        this.id_jenis_soal = id_jenis_soal;
+    }
 
 }

@@ -76,7 +76,11 @@ public class jadwal extends Fragment {
         }
     }
     //URL JANGAN LUPA DIGANTI INI TEMAN TEMAN KALO MAU NGE RUN
+<<<<<<< HEAD
     private final String URL_Jadwal = "http://192.168.1.24/SingujiSmapa/folder_php/jadwal.php";
+=======
+    private final String URL_Jadwal = "http://192.168.43.132/SingujiSmapa/folder_php/jadwal.php";
+>>>>>>> 38acf737d0edf68d48c4d01f811d87fbe0e3571b
     private RecyclerView myrecyclerview ;
     private List<JadwalItem> lstjadwal;
     private RecyclerViewAdapter_jadwal adapter;
@@ -121,6 +125,8 @@ public class jadwal extends Fragment {
                                 jadwal.setStatussoal(jsonObject.getString("tipe_ujian"));
                                 jadwal.setJumlahsoal(jsonObject.getString("jumlah_soal"));
                                 jadwal.setWaktumulai(jsonObject.getString("waktu_mengerjakan"));
+                                jadwal.setTokenSoal(jsonObject.getString("token_soal"));
+                                jadwal.setId_jenis_soal(jsonObject.getString("id_jenis_soal"));
                                 lstjadwal.add(jadwal);
                             } catch (JSONException e) {
                                 e.printStackTrace();
