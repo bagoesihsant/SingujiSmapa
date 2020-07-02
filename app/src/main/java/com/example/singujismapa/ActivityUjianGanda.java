@@ -1,7 +1,10 @@
 package com.example.singujismapa;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -17,8 +20,10 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.example.singujismapa.Helper.SessionManager;
 import com.example.singujismapa.Helper.Soal;
 
 import org.json.JSONArray;
@@ -40,6 +45,7 @@ public class ActivityUjianGanda extends AppCompatActivity {
     Intent intentSoal;
 
     private static String URL_SOAL = "http://192.168.43.132/SiNgujiSmapa-Web/api/exam/questions";
+    private static String URL_JAWAB  = "http://192.168.43.132/SiNgujiSmapa-Web/api/exam/insertAnswer";
 
     List<Soal> soalList;
     List<Soal> kunciJawaban;
@@ -49,8 +55,11 @@ public class ActivityUjianGanda extends AppCompatActivity {
 
     List<String> jawaban;
 
+    List<String> kumpulanIdSoal;
+
+    SessionManager manager;
+
     int counter = 0;
-    int score = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,12 +72,8 @@ public class ActivityUjianGanda extends AppCompatActivity {
 
         String jenisSoal = intentSoal.getStringExtra("id_jenis_soal");
         String mapel = intentSoal.getStringExtra("subject_quiz");
-
-        soalList = new ArrayList<>();
-        kunciJawaban = new ArrayList<>();
-        opsi = new ArrayList<List<Soal>>();
-        subOpsi = new ArrayList<>();
-        jawaban = new ArrayList<>();
+        final String idUjian = intentSoal.getStringExtra("id_ujian");
+        final String nis = manager.getNIS();
 
         getSoal(jenisSoal, mapel);
 
@@ -97,10 +102,34 @@ public class ActivityUjianGanda extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                for (int i = 0; i < jawaban.size(); i++)
-                {
-                    Toast.makeText(ActivityUjianGanda.this, "Jawaban ke " + i + " adalah : " + jawaban.get(i).toString(), Toast.LENGTH_SHORT).show();
-                }
+                final AlertDialog.Builder builder = new AlertDialog.Builder(ActivityUjianGanda.this);
+                builder.setTitle("Warning");
+                builder.setMessage("Apakah anda yakin menyelesaikan ujian ?");
+                builder.setCancelable(true);
+
+                builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+                        for(int i = 0; i < kumpulanIdSoal.size(); i++)
+                        {
+                            insertAnswer(nis, idUjian, kumpulanIdSoal.get(i), jawaban.get(i));
+                        }
+
+                        tampilDialogNilai();
+
+                    }
+                });
+
+                builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                AlertDialog dialog = builder.create();
+                dialog.show();
 
             }
         });
@@ -126,6 +155,14 @@ public class ActivityUjianGanda extends AppCompatActivity {
         prevButton = findViewById(R.id.prevButton);
         nextButton = findViewById(R.id.nextButton);
 
+        soalList = new ArrayList<>();
+        kunciJawaban = new ArrayList<>();
+        opsi = new ArrayList<List<Soal>>();
+        subOpsi = new ArrayList<>();
+        jawaban = new ArrayList<>();
+        kumpulanIdSoal = new ArrayList<>();
+
+        manager = new SessionManager(ActivityUjianGanda.this);
     }
 
     private void startExam(String subjectQuiz)
@@ -366,15 +403,7 @@ public class ActivityUjianGanda extends AppCompatActivity {
                                 subOpsi.add(listOpsi);
                                 opsi.add(subOpsi);
 
-//                                soal.setId_paket(questionObject.getString("id_paket"));
-//                                soal.setId_jenis_soal(questionObject.getString("id_jenis_soal"));
-//                                soal.setPertanyaan(questionObject.getString("pertanyaan"));
-//                                soal.setOpsi_a(questionObject.getString("opsi_a"));
-//                                soal.setOpsi_b(questionObject.getString("opsi_b"));
-//                                soal.setOpsi_c(questionObject.getString("opsi_c"));
-//                                soal.setOpsi_d(questionObject.getString("opsi_d"));
-//                                soal.setOpsi_e(questionObject.getString("opsi_e"));
-//                                soal.setKunci_jawaban(questionObject.getString("kunci_jawaban"));
+                                kumpulanIdSoal.add(questionObject.getString("id_soal"));
 
                                 startExam(paramMapel);
 
@@ -411,6 +440,80 @@ public class ActivityUjianGanda extends AppCompatActivity {
     private static String htmlToText(String html)
     {
         return android.text.Html.fromHtml(html).toString();
+    }
+
+    private void insertAnswer(final String nis, final String idUjian, final String idSoal, final String jawaban)
+    {
+        RequestQueue requestQueue = Volley.newRequestQueue(ActivityUjianGanda.this);
+        StringRequest request = new StringRequest(Request.Method.POST, URL_JAWAB,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+
+                        try {
+                            JSONObject jsonObject = new JSONObject(response);
+
+                            String status = jsonObject.getString("status");
+
+                            if(status.equals("202"))
+                            {
+                                Toast.makeText(ActivityUjianGanda.this, "Jawaban anda berhasil disimpan", Toast.LENGTH_SHORT).show();
+                            }else
+                            {
+                                Toast.makeText(ActivityUjianGanda.this, "Jawaban anda gagal disimpan", Toast.LENGTH_SHORT).show();
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                            Toast.makeText(ActivityUjianGanda.this, "JSON Error : " + e.toString(), Toast.LENGTH_SHORT).show();
+                        }
+
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+                        Toast.makeText(ActivityUjianGanda.this, "Error : " + error.toString(), Toast.LENGTH_SHORT).show();
+                    }
+                })
+        {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> params = new HashMap<>();
+                params.put("nis",nis);
+                params.put("idUjian",idUjian);
+                params.put("idSoal",idSoal);
+                params.put("jawaban",jawaban);
+                return params;
+            }
+        };
+
+        requestQueue.add(request);
+    }
+
+    private void tampilDialogNilai()
+    {
+
+        AlertDialog.Builder builder = new AlertDialog.Builder(ActivityUjianGanda.this);
+        builder.setTitle("Warning");
+        builder.setMessage("Jawaban anda sudah disimpan, apakah anda ingin melihat nilai ?");
+        builder.setNegativeButton("Tidak", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+                finish();
+            }
+        });
+        builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                
+            }
+        });
+
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
     }
 
 }
