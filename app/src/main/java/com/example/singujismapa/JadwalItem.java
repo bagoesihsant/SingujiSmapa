@@ -10,7 +10,7 @@ public class JadwalItem {
     private String waktumulai;
     private String tokenSoal;
     private String id_jenis_soal;
-
+    private String id_ujian;
 
     public JadwalItem() {
     }
@@ -104,6 +104,14 @@ public class JadwalItem {
     public void setId_jenis_soal(String id_jenis_soal)
     {
         this.id_jenis_soal = id_jenis_soal;
+    }
+
+    public String getId_ujian() {
+        return id_ujian;
+    }
+
+    public void setId_ujian(String id_ujian) {
+        this.id_ujian = id_ujian;
     }
 
 }
