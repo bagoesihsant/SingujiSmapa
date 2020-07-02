@@ -457,7 +457,7 @@ public class akun_saya extends Fragment {
         private void checkEmptyValue(){
             tmpJurusan = Ejurusan.getText().toString().trim();
             tmpKelas = Ekelas.getText().toString().trim();
-            tmpSemester = Esemester.getText().toString().trim();
+            //tmpSemester = Esemester.getText().toString().trim();
             //tmpJenis_kelamin = spinnerJK.getText().toString().trim();
             tmpUsername = Eusername.getText().toString().trim();
             tmpPassword = Epassword.getText().toString().trim();
