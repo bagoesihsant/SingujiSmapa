@@ -66,8 +66,32 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
 
                 if(editToken.getText().toString().equals(mData.get(vHolder.getAdapterPosition()).getTokenSoal()))
                 {
-                    editToken.setText("");
-                    mContext.startActivity(new Intent(mContext, ActivityUjian.class));
+                    switch(mData.get(vHolder.getAdapterPosition()).getId_jenis_soal())
+                    {
+                        case "JNS001" :
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            mContext.startActivity(new Intent(mContext, ActivityUjianGanda.class));
+                            break;
+
+                        case "JNS002" :
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            mContext.startActivity(new Intent(mContext, ActivityUjianEssay.class));
+                            break;
+
+                        case "JNS003" :
+                            Toast.makeText(mContext, "Mohon maaf, ujian benar salah blm di implementasikan", Toast.LENGTH_SHORT).show();
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            break;
+
+                        case "JNS004" :
+                            Toast.makeText(mContext, "Mohon maaf, ujian mengurutkan blm di implementasikan", Toast.LENGTH_SHORT).show();
+                            editToken.setText("");
+                            myDialog.dismiss();
+                            break;
+                    }
                 }else
                 {
                     Toast.makeText(mContext, "Token tidak cocok, harap periksa kembali token peserta.", Toast.LENGTH_SHORT).show();
