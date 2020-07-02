@@ -13,7 +13,7 @@ public class Soal {
     private String opsi_e;
     private String kunci_jawaban;
     private String pembahasan;
-
+    private int jumlahSoal;
 
     public Soal()
     {
@@ -106,5 +106,13 @@ public class Soal {
 
     public void setPembahasan(String pembahasan) {
         this.pembahasan = pembahasan;
+    }
+    
+    public int getJumlahSoal() {
+        return jumlahSoal;
+    }
+
+    public void setJumlahSoal(int jumlahSoal) {
+        this.jumlahSoal = jumlahSoal;
     }
 }
