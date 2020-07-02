@@ -143,6 +143,7 @@
             android:text="A"
             android:textSize="16sp"
             android:textColor="@color/black"
+            android:padding="8dp"
             />
 
         <RadioButton
@@ -152,6 +153,7 @@
             android:text="B"
             android:textSize="16sp"
             android:textColor="@color/black"
+            android:padding="8dp"
             />
 
         <RadioButton
@@ -161,6 +163,7 @@
             android:text="C"
             android:textSize="16sp"
             android:textColor="@color/black"
+            android:padding="8dp"
             />
 
         <RadioButton
@@ -170,6 +173,7 @@
             android:text="D"
             android:textSize="16sp"
             android:textColor="@color/black"
+            android:padding="8dp"
             />
 
         <RadioButton
@@ -179,6 +183,7 @@
             android:text="E"
             android:textSize="16sp"
             android:textColor="@color/black"
+            android:padding="8dp"
             />
 
     </RadioGroup>
@@ -194,6 +199,19 @@
         android:text="Simpan Jawaban"
         android:textColor="@color/white"
         android:background="@color/colorPrimary"
+        />
+
+    <Button
+        android:id="@+id/finishAnswerButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/submitAnswerButton"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        android:layout_marginTop="20dp"
+        android:text="Selesai Ujian"
+        android:textColor="@color/white"
+        android:background="@color/colorAccent"
         />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
