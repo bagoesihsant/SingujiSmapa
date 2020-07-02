@@ -74,6 +74,7 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
                             Intent intent = new Intent(mContext, ActivityUjianGanda.class);
                             intent.putExtra("id_jenis_soal", mData.get(vHolder.getAdapterPosition()).getId_jenis_soal());
                             intent.putExtra("subject_quiz", mData.get(vHolder.getAdapterPosition()).getMapel());
+                            intent.putExtra("id_ujian", mData.get(vHolder.getAdapterPosition()).getId_ujian());
                             mContext.startActivity(intent);
                             break;
 
