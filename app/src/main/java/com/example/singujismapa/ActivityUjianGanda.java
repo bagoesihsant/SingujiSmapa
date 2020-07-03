@@ -116,7 +116,7 @@ public class ActivityUjianGanda extends AppCompatActivity {
                             insertAnswer(nis, idUjian, kumpulanIdSoal.get(i), jawaban.get(i));
                         }
 
-                        tampilDialogNilai();
+                        tampilDialogNilai(nis,idUjian);
 
                     }
                 });
@@ -491,7 +491,7 @@ public class ActivityUjianGanda extends AppCompatActivity {
         requestQueue.add(request);
     }
 
-    private void tampilDialogNilai()
+    private void tampilDialogNilai(final String nis, final String id_ujian)
     {
 
         AlertDialog.Builder builder = new AlertDialog.Builder(ActivityUjianGanda.this);
@@ -507,7 +507,10 @@ public class ActivityUjianGanda extends AppCompatActivity {
         builder.setPositiveButton("Ya", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                
+                Intent intent = new Intent(ActivityUjianGanda.this, ActivityNilai.class);
+                intent.putExtra("NIS", nis);
+                intent.putExtra("id_ujian", id_ujian);
+                startActivity(intent);
             }
         });
 
