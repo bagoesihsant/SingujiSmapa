@@ -79,9 +79,10 @@ public class RecyclerViewAdapter_jadwal extends RecyclerView.Adapter<RecyclerVie
                             break;
 
                         case "JNS002" :
+                            Toast.makeText(mContext, "Mohon maaf, ujian Esssay blm di implementasikan", Toast.LENGTH_SHORT).show();
                             editToken.setText("");
                             myDialog.dismiss();
-                            mContext.startActivity(new Intent(mContext, ActivityUjianEssay.class));
+//                            mContext.startActivity(new Intent(mContext, ActivityUjianEssay.class));
                             break;
 
                         case "JNS003" :
